@@ -1,0 +1,16 @@
+# Environment variables — DO NOT COMMIT real credentials
+.env
+
+# PHP cache
+*.cache
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
