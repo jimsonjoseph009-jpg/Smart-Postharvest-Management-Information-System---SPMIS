@@ -31,7 +31,8 @@ $stmt = $db->prepare("
     SELECT ml.*,
            c.name as crop_name_enc,
            pp.product_name as proc_name_enc,
-           u.full_name as seller_name_enc
+           u.full_name as seller_name_enc,
+           u.phone as seller_phone_enc
     FROM `market_listings` ml
     LEFT JOIN `harvests` h ON (ml.product_type = 'harvest' AND ml.product_id = h.id)
     LEFT JOIN `crops` c ON h.crop_id = c.id
@@ -58,11 +59,15 @@ $listing = [
     'id'           => $row['id'],
     'seller_id'    => $row['seller_id'],
     'seller_name'  => $service->decrypt($row['seller_name_enc']),
+    'seller_phone' => $service->decrypt($row['seller_phone_enc']),
     'product_name' => $productName,
     'quantity_kg'  => (float)$service->decrypt($row['quantity_kg']),
     'price_per_kg' => (float)$service->decrypt($row['price_per_kg']),
     'location'     => $service->decrypt($row['location']),
 ];
+
+$service->logAudit('users', $row['seller_id'], 'full_name', 'DECRYPT', $row['seller_name_enc']);
+$service->logAudit('users', $row['seller_id'], 'phone', 'DECRYPT', $row['seller_phone_enc']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
@@ -165,7 +170,13 @@ require_once __DIR__ . '/../includes/header.php';
 
           <div class="kh-card p-3 mb-3 bg-light">
             <h6 class="fw-bold mb-2"><i class="fas fa-wallet text-success me-2"></i>Maelezo ya Malipo (Lipia Hapa)</h6>
-            <p class="small text-muted mb-2">Tuma kiasi cha malipo kwenda nambari ya muuzaji kisha jaza namba ya muamala chini.</p>
+            <div class="p-2 mb-3 bg-white border rounded">
+              <div class="small text-muted mb-1">Mlipaji (Muuzaji):</div>
+              <div class="fw-bold text-dark"><?= escape($listing['seller_name']) ?></div>
+              <div class="small text-muted mt-2 mb-1">Namba ya Simu ya Muuzaji (M-Pesa/Tigo Pesa/Airtel Money/Halopesa):</div>
+              <div class="fw-bold text-primary fs-5"><i class="fas fa-phone-alt me-1"></i><?= escape($listing['seller_phone']) ?></div>
+            </div>
+            <p class="small text-muted mb-2">Tuma kiasi cha malipo kwenda nambari hiyo ya muuzaji hapo juu, kisha chagua njia ya malipo na ujaze namba ya muamala (Transaction ID) hapa chini.</p>
             <div class="row g-2">
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Njia ya Malipo *</label>

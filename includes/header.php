@@ -48,7 +48,9 @@ $pageTitle = $pageTitle ?? 'KILIMO-HIFADHI';
             <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/farmer/request_storage.php"><i class="fas fa-warehouse"></i> Uhifadhi</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/farmer/request_transport.php"><i class="fas fa-truck"></i> Usafiri</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/farmer/request_processing.php"><i class="fas fa-industry"></i> Usindikaji</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/farmer/view_requests.php"><i class="fas fa-tasks"></i> Maombi Yangu</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/market/browse.php"><i class="fas fa-store"></i> Soko</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/farmer/view_orders.php"><i class="fas fa-receipt"></i> Mauzo Yangu</a></li>
 
           <?php elseif ($role === 'storage_provider'): ?>
             <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/storage/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashibodi</a></li>
